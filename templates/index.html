@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <button onclick="myFn()">get请求，无参数</button>
+        <div id="test"></div>
+    </div>
+    <br>
+    <div>
+        <button onclick="myFn1()">get请求，有参数</button>
+        <div id="test1"></div>
+    </div>
+    <br>
+    <div>
+        <button onclick="myFn3()">post请求，无参数</button>
+        <div id="test3"></div>
+    </div>
+    <br>
+    <div>
+        <button onclick="myFn4()">post请求，有参数</button>
+        <div id="test4"></div>
+    </div>
+
+
+    <div>
+        <label for="name">名字</label>
+        <input type="text" id="name" name="name">
+
+        <label for="age">年龄</label>
+        <input type="text" id="age" name="age">
+
+        <button onclick="submit()">提交</button>
+        <div id="test5"></div>
+    </div>
+
+
+    <div>
+        <label for="ids">IDs</label>
+        <input type="text" id="ids" name="ids">
+
+        <label for="sex">性别</label>
+        <input type="text" id="sex" name="sex">
+
+        <button onclick="submit1()">提交</button>
+        <div id="test6"></div>
+    </div>
+
+</body>
+<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script>
+
+    // 这是get,不传参数
+    function myFn(){
+        $.ajax({
+            url:"/indexApi" ,
+            type:"get",
+            success:function(res) {
+                console.log(res)
+                // $("#test").text(JSON.stringify(res))
+                $("#test").text(res.data)
+            }
+        })
+    }
+
+    // 这是get,传参数
+    function myFn1(){
+        $.ajax({
+            url:"/indexApi2" ,
+            type:"get",
+            data:{
+                id:1
+            },
+            success:function(res) {
+                console.log(res)
+                // $("#test").text(JSON.stringify(res))
+                $("#test1").text(res.data)
+            }
+        })
+    }
+
+    // 无参数的post
+    function myFn3(){
+        $.ajax({
+            url:"/indexApi3" ,
+            type:"post",
+            success:function(res) {
+                console.log(res)
+                // $("#test").text(JSON.stringify(res))
+                $("#test3").text(res.data)
+            }
+        })
+    }
+
+    // 有参数的post
+    function myFn4(){
+        $.ajax({
+            url:"/indexApi4" ,
+            type:"post",
+            data:{
+                id:4809234
+            },
+            success:function(res) {
+                console.log(res)
+                // $("#test").text(JSON.stringify(res))
+                $("#test4").text(res.data)
+            }
+        })
+    }
+
+    //提交表单
+    function submit(){
+        var name = $("#name").val()
+        var age = $("#age").val()
+        $.ajax({
+            url:"/indexApi5" ,
+            type:"post",
+            data:{
+                name:name,
+                age:age,
+            },
+            success:function(res) {
+                $("#test5").text(res.data)
+            }
+        })
+    }
+
+    //提交表单，通过Json的方式
+    function submit1() {
+        var ids = $("#ids").val()
+        var sex = $("#sex").val()
+        var data = {
+            ids:ids,
+            sex:sex,
+        }
+        $.ajax({
+            url:"/indexApi6" ,
+            type:"post",
+            data:JSON.stringify(data),
+            success:function(res) {
+                $("#test6").text(res.data)
+            }
+        })
+    }
+
+</script>
+</html>
